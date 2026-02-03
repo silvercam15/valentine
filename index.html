@@ -229,8 +229,8 @@
                 Math.pow(mouseY - btnCenterY, 2)
             );
             
-            // If mouse is within 100px, move the button
-            if (distance < 100) {
+            // If mouse is within 150px (increased from 100px), move the button
+            if (distance < 150) {
                 const card = document.querySelector('.card');
                 const cardRect = card.getBoundingClientRect();
                 
@@ -241,8 +241,8 @@
                 let newX = Math.random() * maxX;
                 let newY = Math.random() * maxY;
                 
-                // Make sure it's not too close to the current mouse position
-                while (Math.sqrt(Math.pow(newX - mouseX, 2) + Math.pow(newY - mouseY, 2)) < 150) {
+                // Make sure it's not too close to the current mouse position (increased distance)
+                while (Math.sqrt(Math.pow(newX - mouseX, 2) + Math.pow(newY - mouseY, 2)) < 200) {
                     newX = Math.random() * maxX;
                     newY = Math.random() * maxY;
                 }
@@ -250,6 +250,7 @@
                 noBtn.style.position = 'fixed';
                 noBtn.style.left = newX + 'px';
                 noBtn.style.top = newY + 'px';
+                noBtn.style.transition = 'all 0.1s ease-out';
             }
         }
         
@@ -284,6 +285,21 @@
             createConfetti();
             
             const celebration = document.getElementById('celebration');
+            celebration.style.display = 'block';
+            
+            const card = document.getElementById('card');
+            card.style.opacity = '0.3';
+            
+            setTimeout(() => {
+                card.style.transition = 'opacity 0.5s';
+                card.style.opacity = '0';
+            }, 2000);
+        });
+
+        // No button click (if they somehow manage to catch it)
+        noBtn.addEventListener('click', () => {
+            const celebration = document.getElementById('celebration');
+            celebration.innerHTML = 'u owe me tiramisu how dare u 😤';
             celebration.style.display = 'block';
             
             const card = document.getElementById('card');
